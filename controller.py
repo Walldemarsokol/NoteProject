@@ -39,6 +39,15 @@ def menu_note():
         print('Неверный ввод данных. Повторите попытку выбора.')
         return menu_note()
 
+def delete_note():
+    t = []
+    with open('notes.csv','r',encoding='utf-16') as f:
+        for info in f:
+            t.append(info)
+        print(t)
+
+
+
 def choice_todo():
     print("Вы в главном меню.")
     print("Выберете команду:\n\
