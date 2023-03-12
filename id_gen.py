@@ -2,7 +2,6 @@
 from random import randint
 def id_generator():#функция для создания ай ди в базе
     id_num = randint(1,100)
-    print(id_num)
     id_num = str(id_num)
     with open('log_id.csv','r+') as id:
         if id_num in id.read().split(';'):
@@ -11,7 +10,7 @@ def id_generator():#функция для создания ай ди в базе
             id.write(f"{id_num};")
             return id_num
 
-def id_corrector(item):#функция дял удаления ID номера из базы
+def id_corrector(item):#функция для удаления ID номера из базы
     t=[]
     i=3
     res_item = item
@@ -23,12 +22,10 @@ def id_corrector(item):#функция дял удаления ID номера �
             if ';' in line:
                 temp = line.strip().split(';')
                 t=temp
-            print(t)
         for line in t:
             if res_item in line:
                 t.remove(res_item)
                 t.remove('')
-            print(t)
         with open('log_id.csv', 'w+') as id:
             for line in t:
                 id.write(f"{line};")

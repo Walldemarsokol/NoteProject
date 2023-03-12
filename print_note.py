@@ -1,4 +1,4 @@
-def print_note(data):
+def print_note(data):#вывод на экран
     if len(data) > 0:
         print('ID'.center(20),'Дата создания'.center(20),'Заголовок'.center(15),'Заметка'.center(20))
         print('-'*130)
