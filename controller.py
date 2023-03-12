@@ -2,7 +2,7 @@ from add_note import add_note
 from export_note import export_data
 from print_note import print_note
 from datetime import datetime
-from id_gen import id_generator
+from id_gen import *
 
 def greeting():
     print("Добро пожаловать в приложение заметки!")
@@ -23,7 +23,7 @@ def input_data():
     body_note = input("Введите тело заметки: ")
     return [id_note,y_m_d,h_m,head_note, body_note ]
 
-def menu_note():
+def menu_note(word):
     print("Выберете команду:\n\
     red - Редактировать заметку;\n\
     del - Удалить заметку;\n\
@@ -32,23 +32,54 @@ def menu_note():
     if choice == 'red':
         return 1
     elif choice == 'del':
-        return 2
+        delete_note(word)
     elif choice == 'return':
+        print()
+        print()
+        print()
         return choice_todo()
     else:
         print('Неверный ввод данных. Повторите попытку выбора.')
-        return menu_note()
+        print()
+        print()
+        print()
+        return menu_note(word)
 
-def delete_note():
+def delete_note(word):
     t = []
+    data = []
+    tp = []
+    id_corrector(word)
     with open('notes.csv','r',encoding='utf-16') as f:
-        for info in f:
-            t.append(info)
-        print(t)
+        for line in f:
+            if ';' in line:
+                temp = line.strip().split(';')
+                data.append(line)
+                t.append(temp)
+        for line in t:
+            if word in line:
+                tp=line
+                tp.pop()
+
+        string_line = ''
+
+        for item in tp:
+            string_line = (string_line + item + ";")
+        for element in data:
+            if string_line in element:
+                index = data.index(element)
+                data.pop(index)
+            else:
+                print()
+    with open('notes.csv', 'w', encoding='utf-16') as f:
+        for text in data:
+            f.write(text)
+
 
 
 
 def choice_todo():
+    # delete_note()
     print("Вы в главном меню.")
     print("Выберете команду:\n\
     add - Добавить заметку;\n\
@@ -70,9 +101,9 @@ def choice_todo():
         print('-' * 130)
         choice_todo()
     elif ch== 'find':
-        word = input("Введите дату или ID или заголовок: ")
-        data = export_data()
-        item = search_info(word, data)
+        word = input("Введите дату (dd.mm.yy) или ID или заголовок: ")
+        data = export_data()#набор списков
+        item = search_info(word, data)#озвращает нужный список
         if item != None:
             print('ID'.center(20),'Дата создания'.center(20),'Заголовок'.center(15),'Заметка'.center(20))
             print('-'*130)
@@ -80,7 +111,7 @@ def choice_todo():
             print()
             print()
             print()
-            menu_note()
+            menu_note(word)
 
         else:
             print("Данные не обнаруженны")

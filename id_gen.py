@@ -1,6 +1,6 @@
 
 from random import randint
-def id_generator():
+def id_generator():#функция для создания ай ди в базе
     id_num = randint(1,100)
     print(id_num)
     id_num = str(id_num)
@@ -10,6 +10,28 @@ def id_generator():
         else:
             id.write(f"{id_num};")
             return id_num
+
+def id_corrector(item):#функция дял удаления ID номера из базы
+    t=[]
+    i=3
+    res_item = item
+    while(i>0):
+        res_item = res_item[:0] + res_item[1:]
+        i-=1
+    with open('log_id.csv','r+') as id:
+        for line in id:
+            if ';' in line:
+                temp = line.strip().split(';')
+                t=temp
+            print(t)
+        for line in t:
+            if res_item in line:
+                t.remove(res_item)
+                t.remove('')
+            print(t)
+        with open('log_id.csv', 'w+') as id:
+            for line in t:
+                id.write(f"{line};")
 
 
 

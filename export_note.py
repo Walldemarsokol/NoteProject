@@ -1,5 +1,5 @@
 
-def export_data():
+def export_data():#разбивает на несколько списков
     with open('notes.csv', 'r', encoding='utf-16') as file:
         data = []
         t = []

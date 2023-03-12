@@ -1,9 +1,6 @@
 # модуль поиска
 
-from export_note import export_data
-from print_data import print_data
-
-def search_info(word, data):
+def search_info(word, data):#возвращает нужный список
     if len(data) > 0:
         for item in data:
             if word in item:
